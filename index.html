@@ -1,13 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Hello Git</h1>
-        <h1>Amend기능테스트</h1>
-    </body>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>탁구장 회원 관리 프로그램</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f6fb;
+      color: #1d2736;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(20, 34, 66, 0.08);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    p.description {
+      margin-top: 0;
+      color: #4b5b74;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccd5e3;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary { background: #2f74ff; color: #fff; }
+    button.warning { background: #ffb74d; color: #1d2736; }
+    button.danger { background: #ff5f5f; color: #fff; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+      background: white;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e8edf5;
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th { background: #f6f9ff; }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: #f1f5ff;
+      border: 1px solid #dbe6ff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 14px;
+      text-align: center;
+      color: #6d7890;
+      background: #f7f9fd;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>🏓 탁구장 회원 관리 프로그램</h1>
+      <p class="description">회원 등록, 조회, 수정, 삭제를 한 화면에서 관리합니다. 데이터는 브라우저에 자동 저장됩니다.</p>
+
+      <form id="member-form">
+        <input type="hidden" id="member-id" />
+        <div class="grid">
+          <div>
+            <label for="name">이름</label>
+            <input id="name" required placeholder="예: 김탁구" />
+          </div>
+          <div>
+            <label for="phone">연락처</label>
+            <input id="phone" required placeholder="010-0000-0000" />
+          </div>
+          <div>
+            <label for="grade">등급</label>
+            <select id="grade">
+              <option>초급</option>
+              <option>중급</option>
+              <option>상급</option>
+            </select>
+          </div>
+          <div>
+            <label for="visit">이번 달 방문 횟수</label>
+            <input id="visit" type="number" min="0" value="0" />
+          </div>
+          <div>
+            <label for="joinedAt">등록일</label>
+            <input id="joinedAt" type="date" required />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit" id="save-btn">회원 등록</button>
+          <button class="warning hidden" type="button" id="cancel-edit">수정 취소</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="grid">
+        <div>
+          <label for="search">이름/연락처 검색</label>
+          <input id="search" placeholder="검색어 입력" />
+        </div>
+        <div>
+          <label for="grade-filter">등급 필터</label>
+          <select id="grade-filter">
+            <option value="all">전체</option>
+            <option value="초급">초급</option>
+            <option value="중급">중급</option>
+            <option value="상급">상급</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div id="table-wrapper"></div>
+    </section>
+  </main>
+
+  <script src="index.js"></script>
+</body>
 </html>
